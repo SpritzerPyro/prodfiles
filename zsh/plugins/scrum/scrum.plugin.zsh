@@ -1,3 +1,15 @@
+function scb() {
+  local -r issue=$(sgi)
+  local name
+  name=$(echo "$*" | sed --regexp-extended 's/(\.|\s+)/-/g')
+
+  if [[ "${issue:-}" ]]; then
+    name="${issue}-${name}"
+  fi
+
+  git checkout -b "${name}"
+}
+
 function sgi() {
   local -r number=$(
     head --lines=1 "${SCRUM_PLUGIN_DIR}/.number" 2>/dev/null || echo ""
