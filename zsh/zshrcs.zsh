@@ -15,3 +15,5 @@ for _i in \
     source "${HOME}/${_i}"
   fi
 done
+
+unset _i
