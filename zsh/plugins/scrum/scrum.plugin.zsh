@@ -64,4 +64,4 @@ function ssi() {
 }
 
 : "${SCRUM_ISSUE_PREFIX:=JIRA}"
-: "${SCRUM_PLUGIN_DIR:="$(dirname "$(readlink -f "$0")")"}"
+: "${SCRUM_PLUGIN_DIR:="${0:A:h}"}"
