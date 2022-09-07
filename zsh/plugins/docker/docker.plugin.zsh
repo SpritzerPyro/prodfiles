@@ -7,3 +7,7 @@ alias dr='docker container run --rm'
 alias drit='docker container run --interactive --rm --tty'
 alias dxc='docker container exec'
 alias dxcit='docker container exec ---interactive --tty'
+
+alias dlov="docker container logs --details --timestamps"
+alias dlof="docker container logs --follow"
+alias dlofv="docker container logs --details --follow --timestamps"
