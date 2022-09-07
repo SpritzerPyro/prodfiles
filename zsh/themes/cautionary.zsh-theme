@@ -1,3 +1,5 @@
+# shellcheck disable=SC2016,SC2034
+
 function _prodfiles_cautionary_theme_git_info() {
   [[ ! "$(git_prompt_info)" ]] && return
 
