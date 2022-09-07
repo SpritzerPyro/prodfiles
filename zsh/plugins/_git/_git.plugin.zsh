@@ -1,6 +1,4 @@
-if is_plugin "${ZSH}" git; then
-  source "${ZSH}/plugins/git/git.plugin.zsh"
-fi
+alias g='git status'
 
 alias gh="git log --pretty=format:\"%Cred%h%Creset %Cgreen%ad%Creset | %s %b%C(yellow)%d%Creset %C(bold blue)[%an]%Creset\" --graph --date=short"
 

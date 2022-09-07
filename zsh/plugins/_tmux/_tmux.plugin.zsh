@@ -1,7 +1,3 @@
-if is_plugin "${ZSH}" tmux; then
-  source "${ZSH}/plugins/tmux/tmux.plugin.zsh"
-fi
-
 function td() {
   local _absolute_path _dir_name _session_name
 

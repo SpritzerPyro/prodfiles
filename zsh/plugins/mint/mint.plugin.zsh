@@ -1,7 +1,5 @@
 [[ "${commands[apt]:-}" ]] && _apt_cmd=apt || _apt_cmd=apt-get
 
-echo "${_apt_cmd}"
-
 function snu() {
   local snapname revision
 
