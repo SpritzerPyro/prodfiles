@@ -1,7 +1,7 @@
-: "${PRODFILES_DIR:="$(dirname "$(readlink -f "${0}")")"}"
+: "${PRODFILES:="$(dirname "$(readlink -f "${0}")")"}"
 
 : "${ZSH:="${HOME}/.oh-my-zsh"}"
-: "${ZSH_CUSTOM:="${PRODFILES_DIR}/zsh"}"
+: "${ZSH_CUSTOM:="${PRODFILES}/zsh"}"
 : "${ZSH_THEME:="cautionary"}"
 
 : "${DISABLE_UNTRACKED_FILES_DIRTY:="true"}"

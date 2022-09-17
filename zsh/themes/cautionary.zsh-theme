@@ -8,9 +8,9 @@ function _prodfiles_cautionary_theme_git_info() {
   echo "%{%F{${COLOR_FG_MUTED}}%})%f "
 }
 
-: "${PRODFILES_DIR:="$(readlink -f "$(dirname "$(readlink -f "$0")")/../..")"}"
+: "${PRODFILES:="$(readlink -f "$(dirname "$(readlink -f "$0")")/../..")"}"
 
-source "${PRODFILES_DIR}/schemes/${PRODFILES_SCHEME:-github_dark}.env"
+source "${PRODFILES}/schemes/${PRODFILES_SCHEME:-github_dark}.env"
 
 ZSH_THEME_GIT_PROMPT_CLEAN="%{%F{${COLOR_SUCCESS_FG}}%} \U2714"
 ZSH_THEME_GIT_PROMPT_DIRTY=''
