@@ -2,11 +2,11 @@ function dlf!() {
   if ! docker container logs --follow "$@"; then
     sleep 2
     echo -e -n '\e[1A\e[K'
-    dlof! "$@"
+    dlf! "$@"
   fi
 
   sleep 4
-  dlof! "$@"
+  dlf! "$@"
 }
 
 alias dci="docker container inspect"
@@ -36,3 +36,5 @@ alias dsp="docker system prune"
 alias dsp!="docker system prune --force"
 alias dspv="docker system prune --volumes"
 alias dspv!="docker system prune --force --volumes"
+
+compdef _docker_logs dlf! dlfv!
