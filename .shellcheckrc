@@ -1,0 +1,4 @@
+shell=bash
+disable=SC1090
+disable=SC1091
+disable=SC1094
