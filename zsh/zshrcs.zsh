@@ -1,19 +1,28 @@
 for _i in \
-  ".zshrc.$(whoami)" \
-  ".zshrc.custom" \
   ".zshrc.user" \
-  ".env.d/.zshrc.$(whoami)" \
-  ".env.d/.zshrc.custom" \
-  ".env.d/.zshrc.user" \
-  ".env.d/.zshrc" \
-  ".env.d/zshrc.$(whoami)" \
-  ".env.d/zshrc.custom" \
-  ".env.d/zshrc.user" \
-  ".env.d/zshrc" \
+  ".zshrc.custom" \
+  ".zshrc.$(whoami)" \
 ; do
   if [[ -f "${HOME}/${_i}" ]]; then
     source "${HOME}/${_i}"
   fi
 done
+
+if [[ -d "${ENV_DIR:-}" ]]; then
+  for _i in \
+    "${ENV_DIR}/zshrc" \
+    "${ENV_DIR}/.zshrc" \
+    "${ENV_DIR}/zshrc.user" \
+    "${ENV_DIR}/.zshrc.user" \
+    "${ENV_DIR}/zshrc.custom" \
+    "${ENV_DIR}/.zshrc.custom" \
+    "${ENV_DIR}/zshrc.$(whoami)" \
+    "${ENV_DIR}/.zshrc.$(whoami)" \
+  ; do
+    if [[ -f "${HOME}/${_i}" ]]; then
+      source "${HOME}/${_i}"
+    fi
+  done
+fi
 
 unset _i
