@@ -1,28 +1,14 @@
-for _i in \
-  ".zshrc.user" \
-  ".zshrc.custom" \
-  ".zshrc.$(whoami)" \
-; do
-  if [[ -f "${HOME}/${_i}" ]]; then
-    source "${HOME}/${_i}"
+while IFS= read -r -d '' _i; do
+  if [[ -f "${_i}" ]] && [[ "${_i}" != "${HOME}/.zshrc" ]]; then
+    source "${_i}"
   fi
-done
-
-if [[ -d "${ENV_DIR:-}" ]]; then
-  for _i in \
-    "${ENV_DIR}/zshrc" \
-    "${ENV_DIR}/.zshrc" \
-    "${ENV_DIR}/zshrc.user" \
-    "${ENV_DIR}/.zshrc.user" \
-    "${ENV_DIR}/zshrc.custom" \
-    "${ENV_DIR}/.zshrc.custom" \
-    "${ENV_DIR}/zshrc.$(whoami)" \
-    "${ENV_DIR}/.zshrc.$(whoami)" \
-  ; do
-    if [[ -f "${HOME}/${_i}" ]]; then
-      source "${HOME}/${_i}"
-    fi
-  done
-fi
+done < <(
+  find "${HOME}" "${ENV_DIR:-"${HOME}"}" \
+    -maxdepth 1 \
+    -regextype posix-extended \
+    -regex ".*?(\.|\/)zshrc(\.(user|custom|$(whoami)))?$" \
+    -type f,l \
+    -print0
+)
 
 unset _i
