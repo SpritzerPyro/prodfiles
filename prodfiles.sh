@@ -19,7 +19,10 @@ for _i in "${plugins[@]}"; do
   fi
 done
 
-unset _i
+if [[ "${ENV_DIR:-}" ]] && [[ ! -d "${ENV_DIR}" ]]; then
+  echo "Make directory '${ENV_DIR}'"
+  mkdir --parents "${ENV_DIR}"
+fi
 
 if [[ ! -d "${ZSH}" ]]; then
   ZSH="${ZSH}" KEEP_ZSHRC=yes \
@@ -28,5 +31,7 @@ if [[ ! -d "${ZSH}" ]]; then
         https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
     )"
 fi
+
+unset _i
 
 source "${ZSH}/oh-my-zsh.sh"
