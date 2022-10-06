@@ -1,6 +1,6 @@
 : "${PRODFILES:="$(dirname "$(readlink -f "${0}")")"}"
 
-: "${ZSH:="${HOME}/.oh-my-zsh"}"
+: "${ZSH:="${PRODFILES}/.oh-my-zsh"}"
 : "${ZSH_CUSTOM:="${PRODFILES}/zsh"}"
 : "${ZSH_THEME:="cautionary"}"
 
@@ -20,5 +20,13 @@ for _i in "${plugins[@]}"; do
 done
 
 unset _i
+
+if [[ ! -d "${ZSH}" ]]; then
+  ZSH="${ZSH}" KEEP_ZSHRC=yes \
+    sh -c "$(
+      curl --fail --insecure --location --show-error --silent \
+        https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    )"
+fi
 
 source "${ZSH}/oh-my-zsh.sh"
