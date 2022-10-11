@@ -1,12 +1,12 @@
 function dlf!() {
-  if ! docker container logs --follow "$@"; then
-    sleep 2
-    echo -e -n '\e[1A\e[K'
-    dlf! "$@"
-  fi
+  while true; do
+    while ! docker container logs --follow "$@"; do
+      sleep 1
+      echo -e -n '\e[1A\e[K'
+    done
 
-  sleep 4
-  dlf! "$@"
+    sleep 2
+  done
 }
 
 alias dci="docker container inspect"
