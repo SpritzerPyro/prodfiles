@@ -21,9 +21,45 @@ function apt_update_all () {
   eval "${_sudo_cmd}${_apt_cmd} autoclean $*"
 }
 
-alias apu!="apt_update_all --yes"
-alias apu="apt_update_all"
+alias aup!="apt_update_all --yes"
+alias aup="apt_update_all"
 alias ati="apt_test_installed"
+
+# Flatpak
+
+function flatpak_install() {
+  local _apt_cmd _sudo_cmd
+
+  [[ "${commands[apt]:-}" ]] && _apt_cmd="apt" || _apt_cmd="apt-get"
+  [[ "${commands[sudo]:-}" ]] && _sudo_cmd="sudo " || _sudo_cmd=""
+
+  if ! apt_test_installed "${_apt_cmd}"; then
+    echo "Command '${_apt_cmd}' not found" >&2
+    return 1
+  fi
+
+  eval "${_sudo_cmd}${_apt_cmd} update"
+  eval "${_sudo_cmd}${_apt_cmd} install flatpak --yes"
+}
+
+function flatpak_update() {
+  local _sudo_cmd
+
+  [[ "${commands[sudo]:-}" ]] && _sudo_cmd="sudo " || _sudo_cmd=""
+
+  if ! apt_test_installed flatpak; then
+    echo "Flatpak is not installed."
+    echo "To install flatpak execute \"flatpak_install\""
+
+    return
+  fi
+
+  eval "${_sudo_cmd}flatpak update"
+  eval "${_sudo_cmd}flatpak uninstall --unused"
+  eval "${_sudo_cmd}flatpak repair"
+}
+
+alias fup="flatpak_update"
 
 # Snap
 
