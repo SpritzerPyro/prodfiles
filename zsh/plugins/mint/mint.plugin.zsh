@@ -2,6 +2,10 @@
 
 [[ "${commands[apt]:-}" ]] && _apt_cmd=apt || _apt_cmd=apt-get
 
+function ati() {
+  dpkg-query -Wf'${db:Status-abbrev}' "$1" 2>/dev/null | grep -q '^i'
+}
+
 function snu() {
   local snapname revision
 
