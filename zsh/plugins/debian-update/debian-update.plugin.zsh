@@ -105,5 +105,5 @@ alias sup="snap_update"
 
 # Joint operations
 
-alias upa="apt_update_all; snap_update; omd update"
-alias upa!="apt_update_all --yes; snap_update; omz update"
+alias upa="apt_update_all; flatpak_update; snap_update; omd update"
+alias upa!="apt_update_all --yes; flatpak_update; snap_update; omz update"
