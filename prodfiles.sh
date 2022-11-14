@@ -1,5 +1,6 @@
 : "${PRODFILES:="$(dirname "$(readlink -f "${0}")")"}"
 
+: "${ZDOTDIR:="${HOME}"}"
 : "${ZSH:="${PRODFILES}/.oh-my-zsh"}"
 : "${ZSH_CUSTOM:="${PRODFILES}/zsh"}"
 : "${ZSH_THEME:="cautionary"}"
@@ -9,23 +10,31 @@
 : "${HIST_STAMPS:="yyyy-mm-dd"}"
 : "${TERM:="xterm-256color"}"
 
-if ! typeset -f prodfiles_danger_zone >/dev/null; then
-  function prodfiles_danger_zone() {
+if ! typeset -f danger_zone >/dev/null; then
+  function danger_zone() {
+    return 1
+  }
+fi
+
+if ! typeset -f risk_zone >/dev/null; then
+  function risk_zone() {
     [[ "${SSH_CONNECTION:-}" ]]
   }
 fi
 
-: "${PRODFILES_DANGER_ZONE:="$(prodfiles_danger_zone && echo 1 || echo 0)"}"
+function danger_level() {
+  if danger_zone; then
+    echo 2
+  elif risk_zone; then
+    echo 1
+  else
+    echo 0
+  fi
+}
 
-if (( PRODFILES_DANGER_ZONE )); then
-  : "${PRODFILES_DANGER_LEVEL:=2}"
-fi
-
-if [[ "${SSH_CONNECTION:-}" ]]; then
-  : "${PRODFILES_DANGER_LEVEL:=1}"
-fi
-
-: "${PRODFILES_DANGER_LEVEL:=0}"
+danger_zone && echo "Danger: true" || echo "Danger: false"
+risk_zone   && echo "Risk:   true" || echo "Risk:   false"
+echo "Danger Level: $(danger_level)"
 
 if [[ "${TERM}" == "tmux-256color" ]]; then
   TERM="xterm-256color"

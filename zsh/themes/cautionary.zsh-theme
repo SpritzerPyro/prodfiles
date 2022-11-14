@@ -29,9 +29,18 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{%F{${COLOR_ATTENTION_FG}}%} !"
 
 PROMPT=''
 
-if [[ "${SSH_CLIENT:-}" ]]; then
-  PROMPT+='%{%F{${COLOR_SEVERE_FG}}%}%n@%m%f '
-  PROMPT+=$'\U1F480 '
+if typeset -f danger_level >/dev/null; then
+  case "$(danger_level)" in
+    0) PROMPT+='%{%F{${COLOR_FG_MUTED}}%}%n@%m%f ';;
+    1)
+      PROMPT+='%{%F{${COLOR_SEVERE_FG}}%}%n@%m%f '
+      PROMPT+=$'\U1F480 '
+      ;;
+    *)
+      PROMPT+='%{%F{${COLOR_DANGER_FG}}%}%n@%m%f '
+      PROMPT+=$'\U1F480 '
+      ;;
+  esac
 else
   PROMPT+='%{%F{${COLOR_FG_MUTED}}%}%n@%m%f '
 fi
