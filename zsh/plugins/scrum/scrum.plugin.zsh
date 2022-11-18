@@ -21,7 +21,7 @@ function sgi() {
 }
 
 function ssi() {
-  echo "${1:-}" > "${SCRUM_PLUGIN_DIR}/.number"
+  echo "${1#"${SCRUM_ISSUE_PREFIX}-"}" > "${SCRUM_PLUGIN_DIR}/.number"
 
   local -r issue=$(sgi)
 
