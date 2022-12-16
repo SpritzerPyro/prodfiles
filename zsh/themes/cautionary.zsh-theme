@@ -29,18 +29,12 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="%{%F{${COLOR_ATTENTION_FG}}%} !"
 
 PROMPT=''
 
-if typeset -f danger_level >/dev/null; then
-  case "$(danger_level)" in
-    0) PROMPT+='%{%F{${COLOR_FG_MUTED}}%}%n@%m%f ';;
-    1)
-      PROMPT+='%{%F{${COLOR_SEVERE_FG}}%}%n@%m%f '
-      PROMPT+=$'\U1F480 '
-      ;;
-    *)
-      PROMPT+='%{%F{${COLOR_DANGER_FG}}%}%n@%m%f '
-      PROMPT+=$'\U1F480 '
-      ;;
-  esac
+if danger_zone; then
+  PROMPT+='%{%F{${COLOR_DANGER_FG}}%}%n@%m%f '
+  PROMPT+=$'\U1F480 '
+elif risk_zone; then
+  PROMPT+='%{%F{${COLOR_SEVERE_FG}}%}%n@%m%f '
+  PROMPT+=$'\U1F480 '
 else
   PROMPT+='%{%F{${COLOR_FG_MUTED}}%}%n@%m%f '
 fi

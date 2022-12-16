@@ -10,31 +10,17 @@
 : "${HIST_STAMPS:="yyyy-mm-dd"}"
 : "${TERM:="xterm-256color"}"
 
-if ! typeset -f danger_zone >/dev/null; then
+if ! typeset -f -F danger_zone &>/dev/null; then
   function danger_zone() {
     return 1
   }
 fi
 
-if ! typeset -f risk_zone >/dev/null; then
+if ! typeset -f -F risk_zone &>/dev/null; then
   function risk_zone() {
     [[ "${SSH_CONNECTION:-}" ]]
   }
 fi
-
-function danger_level() {
-  if danger_zone; then
-    echo 2
-  elif risk_zone; then
-    echo 1
-  else
-    echo 0
-  fi
-}
-
-danger_zone && echo "Danger: true" || echo "Danger: false"
-risk_zone   && echo "Risk:   true" || echo "Risk:   false"
-echo "Danger Level: $(danger_level)"
 
 if [[ "${TERM}" == "tmux-256color" ]]; then
   TERM="xterm-256color"
