@@ -105,5 +105,11 @@ alias sup="snap_update"
 
 # Joint operations
 
-alias upa="apt_update_all; flatpak_update; snap_update; omd update"
-alias upa!="apt_update_all --yes; flatpak_update; snap_update; omz update"
+function omz_update() {
+  if command -v omz &>/dev/null; then
+    omz update
+  fi
+}
+
+alias upa="apt_update_all; flatpak_update; snap_update; omz_update"
+alias upa!="apt_update_all --yes; flatpak_update; snap_update; omz_update"
