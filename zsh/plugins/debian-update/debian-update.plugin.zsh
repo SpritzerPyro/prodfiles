@@ -9,8 +9,8 @@ function apt_test_installed() {
 function apt_update_all () {
   local _apt_cmd _sudo_cmd
 
-  [[ "${commands[apt]:-}" ]] && _apt_cmd="apt" || _apt_cmd="apt-get"
-  [[ "${commands[sudo]:-}" ]] && _sudo_cmd="sudo " || _sudo_cmd=""
+  command -v apt &>/dev/null && _apt_cmd="apt" || _apt_cmd="apt-get"
+  command -v sudo &>/dev/null && _sudo_cmd="sudo " || _sudo_cmd=""
 
   apt_test_installed "${_apt_cmd}" || return 0
 
@@ -30,8 +30,8 @@ alias ati="apt_test_installed"
 function flatpak_install() {
   local _apt_cmd _sudo_cmd
 
-  [[ "${commands[apt]:-}" ]] && _apt_cmd="apt" || _apt_cmd="apt-get"
-  [[ "${commands[sudo]:-}" ]] && _sudo_cmd="sudo " || _sudo_cmd=""
+  command -v apt &>/dev/null && _apt_cmd="apt" || _apt_cmd="apt-get"
+  command -v sudo &>/dev/null && _sudo_cmd="sudo " || _sudo_cmd=""
 
   if ! apt_test_installed "${_apt_cmd}"; then
     echo "Command '${_apt_cmd}' not found" >&2
@@ -45,7 +45,7 @@ function flatpak_install() {
 function flatpak_update() {
   local _sudo_cmd
 
-  [[ "${commands[sudo]:-}" ]] && _sudo_cmd="sudo " || _sudo_cmd=""
+  command -v sudo &>/dev/null && _sudo_cmd="sudo " || _sudo_cmd=""
 
   if ! apt_test_installed flatpak; then
     echo "Flatpak is not installed."
@@ -66,8 +66,8 @@ alias fup="flatpak_update"
 function snap_install() {
   local _apt_cmd _sudo_cmd
 
-  [[ "${commands[apt]:-}" ]] && _apt_cmd="apt" || _apt_cmd="apt-get"
-  [[ "${commands[sudo]:-}" ]] && _sudo_cmd="sudo " || _sudo_cmd=""
+  command -v apt &>/dev/null && _apt_cmd="apt" || _apt_cmd="apt-get"
+  command -v sudo &>/dev/null && _sudo_cmd="sudo " || _sudo_cmd=""
 
   if ! apt_test_installed "${_apt_cmd}"; then
     echo "Command '${_apt_cmd}' not found" >&2
@@ -82,7 +82,7 @@ function snap_install() {
 function snap_update() {
   local _sudo_cmd
 
-  [[ "${commands[sudo]:-}" ]] && _sudo_cmd="sudo " || _sudo_cmd=""
+  command -v sudo &>/dev/null && _sudo_cmd="sudo " || _sudo_cmd=""
 
   if ! apt_test_installed snapd; then
     echo "The snap daemon is not installed."
