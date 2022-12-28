@@ -97,7 +97,7 @@ function snap_update() {
 
   LANG=C snap list --all | awk '/disabled/{ print $1, $3 }' |
     while read -r snapname revision; do
-        eval "${_sudo_cmd}snap remove ${snapname} --revision=${revision}"
+      eval "${_sudo_cmd}snap remove ${snapname} --revision=${revision}"
     done
 }
 
