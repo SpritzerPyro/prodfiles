@@ -10,6 +10,8 @@
 : "${HIST_STAMPS:="yyyy-mm-dd"}"
 : "${TERM:="xterm-256color"}"
 
+export EDITOR ZDOTDIR ZSH
+
 if ! typeset -f -F danger_zone &>/dev/null; then
   function danger_zone() {
     return 1
