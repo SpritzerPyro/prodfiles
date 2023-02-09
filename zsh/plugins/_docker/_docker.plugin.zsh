@@ -10,7 +10,7 @@ function dlf!() {
 }
 
 alias dci="docker container inspect"
-alias dclc="docker container ls --all --format \"table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\""
+alias dclc="docker container ls --all --format \"table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Names}}\""
 alias dcp!="docker container prune --force"
 alias dcp="docker container prune"
 alias dr='docker container run --rm'
