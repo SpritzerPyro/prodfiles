@@ -33,7 +33,7 @@ if danger_zone; then
   PROMPT+='%{%F{${COLOR_DANGER_FG}}%}%n@%m%f '
   PROMPT+=$'\U1F480 '
 elif risk_zone; then
-  PROMPT+='%{%F{${COLOR_SEVERE_FG}}%}%n@%m%f '
+  PROMPT+='%{%F{${COLOR_ATTENTION_FG}}%}%n@%m%f '
   PROMPT+=$'\U1F480 '
 else
   PROMPT+='%{%F{${COLOR_FG_MUTED}}%}%n@%m%f '
