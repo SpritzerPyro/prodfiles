@@ -1,5 +1,6 @@
 : "${PRODFILES:="$(dirname "$(readlink -f "${0}")")"}"
 
+: "${ZDOTDIR:="${HOME}"}"
 : "${ZSH:="${PRODFILES}/.oh-my-zsh"}"
 : "${ZSH_CUSTOM:="${PRODFILES}/zsh"}"
 : "${ZSH_THEME:="cautionary"}"
@@ -8,6 +9,20 @@
 : "${EDITOR:="vim"}"
 : "${HIST_STAMPS:="yyyy-mm-dd"}"
 : "${TERM:="xterm-256color"}"
+
+export EDITOR ZDOTDIR ZSH
+
+if ! typeset -f -F danger_zone &>/dev/null; then
+  function danger_zone() {
+    return 1
+  }
+fi
+
+if ! typeset -f -F risk_zone &>/dev/null; then
+  function risk_zone() {
+    [[ "${SSH_CONNECTION:-}" ]]
+  }
+fi
 
 if [[ "${TERM}" == "tmux-256color" ]]; then
   TERM="xterm-256color"
