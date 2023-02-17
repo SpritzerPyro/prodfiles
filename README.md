@@ -1,10 +1,10 @@
 # prodfiles
 
-Dotfiles designed to handle production systems.
+Dotfiles, designed to handle production systems.
 
 ## Install
 
-### zsh prodiles
+### zsh prodfiles
 
 Using the zsh `prodfiles` requires `zsh` and `oh-my-zsh`. Follow the instruction in [the `oh-my-zsh` repository](https://github.com/ohmyzsh/ohmyzsh#getting-started) to install both.
 
