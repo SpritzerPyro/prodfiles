@@ -54,3 +54,16 @@ if [[ ! "${ZSH_PLUGINS:r}.zsh" -nt "${ZSH_PLUGINS}" ]]; then
 fi
 
 source "${ZSH_PLUGINS:r}.zsh"
+
+_prodfiles_end_timestamp="$(date +%s%3N)"
+_prodfiles_execution_time="$(( _prodfiles_end_timestamp - _prodfiles_start_timestamp ))"
+
+if (( _prodfiles_execution_time > ${PRODFILES_WARN_THRESHOLD:-20} )); then
+  echo "[prodfiles] Execution took ${_prodfiles_execution_time}ms"
+fi
+
+unset \
+  _prodfiles_end_timestamp \
+  _prodfiles_execution_time \
+  _prodfiles_i \
+  _prodfiles_start_timestamp
