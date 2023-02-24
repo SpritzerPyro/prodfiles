@@ -1,9 +1,8 @@
 : "${PRODFILES:="$(dirname "$(readlink -f "${0}")")"}"
+: "${ANTIDOTE_DIR:="${PRODFILES}/.antidote"}"
 
 : "${ZDOTDIR:="${HOME}"}"
-: "${ZSH:="${PRODFILES}/.oh-my-zsh"}"
-: "${ZSH_CUSTOM:="${PRODFILES}/zsh"}"
-: "${ZSH_THEME:="cautionary"}"
+: "${ZSH_CACHE_DIR:="${HOME}/.cache/zsh"}"
 
 : "${DISABLE_UNTRACKED_FILES_DIRTY:="true"}"
 : "${EDITOR:="vim"}"
@@ -11,6 +10,10 @@
 : "${TERM:="xterm-256color"}"
 
 export EDITOR ZDOTDIR ZSH
+
+for _prodfiles_i in "${ZDOTDIR}" "${ZSH_CACHE_DIR}"; do
+  [[ ! -d "${_prodfiles_i}" ]] && mkdir -p "${_prodfiles_i}"
+done
 
 if ! typeset -f -F danger_zone &>/dev/null; then
   function danger_zone() {
@@ -28,25 +31,24 @@ if [[ "${TERM}" == "tmux-256color" ]]; then
   TERM="xterm-256color"
 fi
 
-for _i in "${plugins[@]}"; do
-  if [[ -f "${ZSH_CUSTOM}/plugins/_${_i}/_${_i}.plugin.zsh" ]]; then
-    plugins+=("_${_i}")
-  fi
-done
-
 if [[ "${ENV_DIR:-}" ]] && [[ ! -d "${ENV_DIR}" ]]; then
   echo "Make directory '${ENV_DIR}'"
   mkdir --parents "${ENV_DIR}"
 fi
 
-if [[ ! -d "${ZSH}" ]]; then
-  ZSH="${ZSH}" KEEP_ZSHRC=yes \
-    sh -c "$(
-      curl --fail --insecure --location --show-error --silent \
-        https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-    )"
+if [[ ! -d "${ANTIDOTE_DIR}" ]]; then
+  git clone https://github.com/mattmc3/antidote.git "${ANTIDOTE_DIR}"
 fi
 
-unset _i
+: "${ZSH_PLUGINS:="${ZDOTDIR}/.zsh_plugins.txt"}"
 
-source "${ZSH}/oh-my-zsh.sh"
+[[ -f "${ZSH_PLUGINS}" ]] || touch "${ZSH_PLUGINS}"
+
+fpath+=("${ANTIDOTE_DIR}")
+autoload -Uz "${fpath[-1]}/antidote"
+
+if [[ ! "${ZSH_PLUGINS:r}.zsh" -nt "${ZSH_PLUGINS}" ]]; then
+  (antidote bundle < "${ZSH_PLUGINS}" >| "${ZSH_PLUGINS:r}.zsh")
+fi
+
+source "${ZSH_PLUGINS:r}.zsh"
