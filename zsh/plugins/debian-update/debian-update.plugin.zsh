@@ -54,8 +54,8 @@ function flatpak_update() {
     return
   fi
 
-  eval "${_sudo_cmd}flatpak update"
-  eval "${_sudo_cmd}flatpak uninstall --unused"
+  eval "${_sudo_cmd}flatpak update $*"
+  eval "${_sudo_cmd}flatpak uninstall --unused $*"
   eval "${_sudo_cmd}flatpak repair"
 }
 
@@ -102,14 +102,5 @@ function snap_update() {
 }
 
 alias sup="snap_update"
-
-# Joint operations
-
-function omz_update() {
-  if command -v omz &>/dev/null; then
-    omz update
-  fi
-}
-
-alias upa="apt_update_all; flatpak_update; snap_update; omz_update"
-alias upa!="apt_update_all --yes; flatpak_update; snap_update; omz_update"
+alias upa!="apt_update_all --yes; flatpak_update --assumeyes; snap_update"
+alias upa="apt_update_all; flatpak_update; snap_update"
