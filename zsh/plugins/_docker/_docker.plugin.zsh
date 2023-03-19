@@ -36,5 +36,3 @@ alias dsp="docker system prune"
 alias dsp!="docker system prune --force"
 alias dspv="docker system prune --volumes"
 alias dspv!="docker system prune --force --volumes"
-
-compdef _docker_logs dlf! dlfv!
