@@ -55,6 +55,10 @@ fi
 
 source "${ZSH_PLUGINS:r}.zsh"
 
+for _prodfiles_i in "${PRODFILES}"/zsh/*.zsh; do
+  source "${_prodfiles_i}"
+done
+
 _prodfiles_end_timestamp="$(date +%s%3N)"
 _prodfiles_execution_time="$(( _prodfiles_end_timestamp - _prodfiles_start_timestamp ))"
 
