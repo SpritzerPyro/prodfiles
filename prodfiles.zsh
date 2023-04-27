@@ -1,6 +1,6 @@
 _prodfiles_start_timestamp="$(date +%s%3N)"
 
-: "${PRODFILES:="$(dirname "$(readlink -f "${0}")")"}"
+: "${PRODFILES:="${0:A:h}"}"
 : "${ANTIDOTE_DIR:="${PRODFILES}/.antidote"}"
 
 : "${ZDOTDIR:="${HOME}"}"
