@@ -1,9 +1,16 @@
 function dlf!() {
+  local _dlf_flag
+  _dlf_flag=0
+
   while true; do
-    while ! docker container logs --follow "$@"; do
-      sleep 1
-      echo -e -n '\e[1A\e[K'
-    done
+    if docker logs --follow "$@" 2>/dev/null; then
+      _dlf_flag=0
+    elif ((!${_dlf_flag})); then
+      echo "================================================================================"
+      echo "Failed to follow logs for container '$@'. Retrying..."
+      echo "================================================================================"
+      _dlf_flag=1
+    fi
 
     sleep 2
   done
