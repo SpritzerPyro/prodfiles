@@ -1,0 +1,10 @@
+#compdef dlf!
+
+_dlf_bang() {
+  local containers
+  # shellcheck disable=SC2207
+  containers=($(docker ps --format '{{.Names}}'))
+  _arguments "1: :(${containers[*]})" "*:command:->args"
+}
+
+_dlf_bang "$@"
