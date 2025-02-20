@@ -1,0 +1,14 @@
+#compdef vcw
+
+_vcw() {
+  local ret
+  ret=1
+
+  _arguments \
+    '1:workspace:_path_files -W ~/.config/vscode -g "*.code-workspace"' && \
+    ret=0
+
+  return ret
+}
+
+_vcw "$@"
