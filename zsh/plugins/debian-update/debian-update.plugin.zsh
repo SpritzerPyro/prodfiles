@@ -12,6 +12,7 @@ function _apt_update_all() {
 
   _apt_test_installed "${_apt_cmd}" || return 0
 
+  eval "${_sudo_cmd}${_apt_cmd} update"
   eval "${_sudo_cmd}${_apt_cmd} full-upgrade $*"
   eval "${_sudo_cmd}${_apt_cmd} autoremove $*"
   eval "${_sudo_cmd}${_apt_cmd} clean $*"
