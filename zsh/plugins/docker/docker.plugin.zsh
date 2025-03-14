@@ -3,16 +3,18 @@ function dlf!() {
   _dlf_flag=0
 
   while true; do
-    if docker logs --follow "$@" 2>/dev/null; then
-      _dlf_flag=0
+    if docker container inspect "$1" &>/dev/null; then
+      echo "Attaching logs for container '$1'..."
+      echo "================================================================================"
+      docker logs --follow "$@" 2>&1
+      echo "================================================================================"
+      echo "Container '$1' has stopped. Waiting to reattach..."
     elif ((!${_dlf_flag})); then
-      echo "================================================================================"
-      echo "Failed to follow logs for container '$@'. Retrying..."
-      echo "================================================================================"
       _dlf_flag=1
+      echo "Container '$1' does not exist. Waiting for it to be created..."
     fi
 
-    sleep 2
+    sleep 1
   done
 }
 
